@@ -32,6 +32,9 @@ namespace SwapKeep
 
             services.AddControllers();
             services.AddTransient<IUserProfileRepository, UserProfileRepository>();
+            services.AddTransient<IItemTradeOfferRepository, ItemTradeOfferRepository>();
+            services.AddTransient<IItemRepository, ItemRepository>();
+            services.AddTransient<IStatusRepository, StatusRepository>();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "SwapKeep", Version = "v1" });
