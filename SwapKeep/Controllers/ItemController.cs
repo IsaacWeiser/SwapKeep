@@ -3,19 +3,23 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SwapKeep.Models;
 using SwapKeep.Repositories;
+using System;
+using System.Security.Claims;
 
 namespace SwapKeep.Controllers
 {
-    
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class ItemController : ControllerBase
     {
         private readonly IItemRepository _itemRepo;
+        private readonly IUserProfileRepository _userProfileRepo;
 
-        public ItemController(IItemRepository itemRepo)
+        public ItemController(IItemRepository itemRepo, IUserProfileRepository user)
         {
             _itemRepo = itemRepo;
+            _userProfileRepo = user;
         }
 
         [HttpGet("{zip}")]
@@ -27,6 +31,7 @@ namespace SwapKeep.Controllers
         [HttpGet]
         public IActionResult GetAll()
         {
+
             return Ok(_itemRepo.GetAllItems());
         }
 
@@ -45,6 +50,8 @@ namespace SwapKeep.Controllers
         [HttpPost]
         public IActionResult Post(Item item)
         {
+            UserProfile user = GetCurrentUserProfile();
+            item.UserId = user.Id;
             _itemRepo.AddItem(item);
             return CreatedAtAction("post", new { id = item.Id }, item);
         }
@@ -66,6 +73,12 @@ namespace SwapKeep.Controllers
 
             _itemRepo.Update(item);
             return NoContent();
+        }
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepo.GetByFirebaseUserId(firebaseUserId);
         }
 
     }
