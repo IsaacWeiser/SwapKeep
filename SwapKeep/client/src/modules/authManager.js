@@ -28,7 +28,8 @@ const _saveUser = (userProfile) => {
 };
 
 export const getToken = () => {
-  return firebase.auth().currentUser.getIdToken();
+  let test = firebase.auth();
+  return test.currentUser.getIdToken();
 };
 
 export const login = (email, pw) => {

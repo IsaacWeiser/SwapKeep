@@ -2,7 +2,7 @@
 {
     public class ItemTradeOffer
     {
-        public int Id { get; }
+        public int Id { get; set; }
 
         public int Party1ItemId { get; set; }
 
