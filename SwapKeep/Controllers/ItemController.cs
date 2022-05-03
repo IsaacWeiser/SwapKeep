@@ -35,9 +35,11 @@ namespace SwapKeep.Controllers
             return Ok(_itemRepo.GetAllItems());
         }
 
-        [HttpGet("itemsofuser/{id}")]
-        public IActionResult GetUserItems(int id)
+        [HttpGet("itemsofuser")]
+        public IActionResult GetUserItems()
         {
+            UserProfile user = GetCurrentUserProfile();
+            int id = user.Id;
             return Ok(_itemRepo.GetItemsByUserId(id));
         }
 

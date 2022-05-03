@@ -20,7 +20,13 @@ namespace SwapKeep.Controllers
         [HttpGet("{firebaseUserId}")]
         public IActionResult GetUserProfile(string firebaseUserId)
         {
-            return Ok(_userProfileRepository.GetByFirebaseUserId(firebaseUserId));
+            var userProfile = _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+            if (userProfile == null)
+            {
+                return NotFound();
+            }
+            return Ok(userProfile);
+
         }
 
         [HttpGet("DoesUserExist/{firebaseUserId}")]
