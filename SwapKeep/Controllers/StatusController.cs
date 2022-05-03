@@ -7,6 +7,7 @@ using System.Security.Claims;
 
 namespace SwapKeep.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class StatusController : ControllerBase
