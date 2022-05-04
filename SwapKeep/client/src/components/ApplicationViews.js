@@ -7,6 +7,7 @@ import { NewItemForm } from "./AddItem";
 import { CurrentUserItems } from "./ShowUserItems";
 import { ItemDetails } from "./ItemDetails";
 import { ItemEdit } from "./EditItem";
+import { ItemDeactivate } from "./DeactivateItem";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -38,6 +39,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/item/edit/:id">
           <ItemEdit />
+        </Route>
+
+        <Route path="/item/deactivate/:id">
+          <ItemDeactivate />
         </Route>
       </Switch>
     </main>
