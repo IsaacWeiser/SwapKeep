@@ -155,9 +155,10 @@ namespace SwapKeep.Repositories
                 {
 
                     cmd.CommandText = @"SELECT i.Id as 'itemId', i.Name as 'itemName', i.CategoryId, i.ImageUrl, i.UserId, 
-                                        i.Description, i.Condition, i.Available
+                                        i.Description, i.Condition, i.Available, c.Id as 'catId', c.Name as 'categoryName'
                                         FROM Item i
-                                        WHERE i.UserId = @id";
+                                        left join Category c on c.Id = i.CategoryId
+                                        WHERE i.Id = @id";
                     cmd.Parameters.AddWithValue("@id", id);
 
                    Item item = null;
@@ -177,7 +178,12 @@ namespace SwapKeep.Repositories
                                 UserId = DbUtils.GetInt(reader, "UserId"),
                                 Description = DbUtils.GetString(reader, "Description"),
                                 Condition = DbUtils.GetInt(reader, "Condition"),
-                                Available = reader.GetBoolean(reader.GetOrdinal("Available"))
+                                Available = reader.GetBoolean(reader.GetOrdinal("Available")),
+                                Category= new Category()
+                                {
+                                    Id =DbUtils.GetInt(reader, "catId"),
+                                    Name = DbUtils.GetString(reader, "categoryName")
+                                }
                             };
 
                         }

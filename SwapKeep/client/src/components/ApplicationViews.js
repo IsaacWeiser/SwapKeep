@@ -5,6 +5,7 @@ import Register from "./Register";
 import Hello from "./Hello";
 import { NewItemForm } from "./AddItem";
 import { CurrentUserItems } from "./ShowUserItems";
+import { ItemDetails } from "./ItemDetails";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -27,7 +28,11 @@ export default function ApplicationViews({ isLoggedIn }) {
         </Route>
 
         <Route path="/item/myItems">
-          {isLoggedIn ? <CurrentUserItems /> : <Redirect to="/login" />}
+          <CurrentUserItems />
+        </Route>
+
+        <Route path="/item/details/:id">
+          <ItemDetails />
         </Route>
       </Switch>
     </main>
