@@ -21,6 +21,25 @@ export const getAllCategories = () => {
   });
 };
 
+export const getCategoryById = (id) => {
+  return getToken().then((token) => {
+    return fetch(`${apiUrl}/${id}`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error(
+          "An unknown error occurred while trying to get quotes."
+        );
+      }
+    });
+  });
+};
+
 export const addCategory = (category) => {
   return getToken().then((token) => {
     return fetch(apiUrl, {

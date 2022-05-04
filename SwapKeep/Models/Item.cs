@@ -18,5 +18,7 @@
 
         public bool Available { get;set; }
 
+        public Category Category { get; set; }
+
     }
 }
