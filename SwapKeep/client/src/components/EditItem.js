@@ -4,8 +4,12 @@ import { useParams } from "react-router-dom";
 import { itemConditioner } from "../modules/itemManager";
 import { Link } from "react-router-dom";
 import { getAllCategories } from "../modules/categoryManager";
+import { updateItem } from "../modules/itemManager";
+import { useHistory } from "react-router-dom";
 
 export const ItemEdit = () => {
+  const history = useHistory();
+
   const [item, setItem] = useState({});
   const { id } = useParams();
   useEffect(() => {
@@ -25,32 +29,65 @@ export const ItemEdit = () => {
 
   useEffect(() => {
     document.querySelector("#categorySelect").value = item?.categoryId;
-  }, [item, categories]);
+  }, [categories]);
 
   const condition = () => {
     return itemConditioner(item?.condition);
   };
 
   const trackCondition = (evt) => {
-    setItem({
-      name: item.name,
-      imageUrl: item.imageUrl,
-      description: item.description,
-      condition: evt.target.value,
-      category: item.categoryId,
-      available: item.available,
-    });
+    let state = { ...item };
+    state.condition = evt.target.value;
+    setItem(state);
   };
 
   const trackCategory = (evt) => {
-    setItem({
+    let state = { ...item };
+    state.categoryId = evt.target.value;
+    setItem(state);
+  };
+
+  const trackName = (evt) => {
+    let state = { ...item };
+    state.name = evt.target.value;
+    setItem(state);
+  };
+
+  const trackImgUrl = (evt) => {
+    let state = { ...item };
+    state.imageUrl = evt.target.value;
+    setItem(state);
+  };
+
+  const trackDescription = (evt) => {
+    let state = { ...item };
+    state.description = evt.target.value;
+    setItem(state);
+  };
+
+  const trackAvailable = (evt) => {
+    let state = { ...item };
+    state.available = evt.target.checked;
+    setItem(state);
+  };
+
+  const submitState = () => {
+    let state = {
+      id: item.id,
       name: item.name,
+      categoryId: item.categoryId,
       imageUrl: item.imageUrl,
+      userId: item.userId,
       description: item.description,
       condition: item.condition,
-      category: evt.target.value,
       available: item.available,
-    });
+    };
+
+    setItem(state);
+
+    updateItem(item);
+
+    history.go(-1);
   };
 
   let i = 1;
@@ -59,11 +96,11 @@ export const ItemEdit = () => {
     <>
       <h1>Edit Item</h1>
       <h4>name:</h4>
-      <input value={`${item?.name}`}></input>
+      <input value={`${item?.name}`} onChange={trackName}></input>
       <h4>Image url</h4>
-      <input value={`${item?.imageUrl}`}></input>
+      <input value={`${item?.imageUrl}`} onChange={trackImgUrl}></input>
       <h4>Description: </h4>
-      <input value={`${item?.description}`}></input>
+      <input value={`${item?.description}`} onChange={trackDescription}></input>
       <h4>condition: </h4>
       <select id="conditionSelect" onChange={trackCondition}>
         <option value="1">Broken</option>
@@ -75,11 +112,19 @@ export const ItemEdit = () => {
       <h4>Category: </h4>
       <select id="categorySelect" onChange={trackCategory}>
         {categories?.map((cat) => (
-          <option value={i++}>{`${cat}`}</option>
+          <option value={cat.id}>{`${cat.name}`}</option>
         ))}
       </select>
       <h4>Available: </h4>
-      <input id="availableChx" type="checkbox"></input>
+      <input
+        id="availableChx"
+        type="checkbox"
+        onChange={trackAvailable}
+      ></input>
+      <div>
+        <button onClick={submitState}>submit</button>
+      </div>
+      <Link to={`/item/details/${item.id}`}>Back</Link>
     </>
   );
 };

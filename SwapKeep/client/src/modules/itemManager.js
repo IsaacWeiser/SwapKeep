@@ -63,6 +63,29 @@ export const getItemById = (id) => {
   });
 };
 
+export const updateItem = (item) => {
+  return getToken().then((token) => {
+    return fetch(`${apiUrl}/${item.id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(item),
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else if (resp.status === 401) {
+        throw new Error("Unauthorized");
+      } else {
+        throw new Error(
+          "An unknown error occurred while trying to save changes to item."
+        );
+      }
+    });
+  });
+};
+
 export const itemConditioner = (num) => {
   if (num === 1) {
     return `Broken`;

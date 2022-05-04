@@ -74,7 +74,7 @@ namespace SwapKeep.Controllers
             }
 
             _itemRepo.Update(item);
-            return NoContent();
+            return Ok(item);
         }
 
         private UserProfile GetCurrentUserProfile()
