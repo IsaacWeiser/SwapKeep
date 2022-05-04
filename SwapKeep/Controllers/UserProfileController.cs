@@ -3,6 +3,7 @@ using System;
 using SwapKeep.Models;
 using SwapKeep.Repositories;
 using Microsoft.AspNetCore.Authorization;
+using System.Security.Claims;
 
 namespace SwapKeep.Controllers
 {
@@ -29,6 +30,14 @@ namespace SwapKeep.Controllers
 
         }
 
+        [HttpGet("currusrid")]
+        public IActionResult GetCurrentUserId()
+        {
+            UserProfile user = GetCurrentUserProfile();
+            int id = user.Id;
+            return Ok(id);
+        }
+
         [HttpGet("DoesUserExist/{firebaseUserId}")]
         public IActionResult DoesUserExist(string firebaseUserId)
         {
@@ -50,5 +59,12 @@ namespace SwapKeep.Controllers
                 new { firebaseUserId = userProfile.FirebaseUserId },
                 userProfile);
         }
+
+        private UserProfile GetCurrentUserProfile()
+        {
+            var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;
+            return _userProfileRepository.GetByFirebaseUserId(firebaseUserId);
+        }
+
     }
 }

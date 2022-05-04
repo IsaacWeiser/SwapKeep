@@ -44,6 +44,25 @@ export const getAllItemsOfUser = () => {
   });
 };
 
+export const getAllItemsOfUserZip = () => {
+  return getToken().then((token) => {
+    return fetch(`${apiUrl}/listings`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error(
+          "An unknown error occurred while trying to get your items."
+        );
+      }
+    });
+  });
+};
+
 export const getItemById = (id) => {
   return getToken().then((token) => {
     return fetch(`${apiUrl}/item/${id}`, {

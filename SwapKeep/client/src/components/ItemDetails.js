@@ -4,9 +4,11 @@ import { getItemById } from "../modules/itemManager";
 import { itemConditioner } from "../modules/itemManager";
 import { getCategoryById } from "../modules/categoryManager";
 import { Link } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 export const ItemDetails = () => {
   const { id } = useParams();
+  const history = useHistory();
   const [item, setItem] = useState({});
 
   const getItem = (id) => {
@@ -19,6 +21,10 @@ export const ItemDetails = () => {
 
   const condition = () => {
     return itemConditioner(item?.condition);
+  };
+
+  const back = () => {
+    history.go(-1);
   };
 
   return (
@@ -37,7 +43,7 @@ export const ItemDetails = () => {
       <p>{`${item?.available}`}</p>
       <Link to={`/item/edit/${item.id}`}>edit</Link> |
       <Link to={`/item/deactivate/${item.id}`}> deactivate</Link> |
-      <Link to={`/item/myItems/`}>back</Link>
+      <a onClick={back}>back</a>
     </>
   );
 };
