@@ -22,9 +22,11 @@ namespace SwapKeep.Controllers
             _userProfileRepo = user;
         }
 
-        [HttpGet("{zip}")]
-        public IActionResult GetByZip(int zip)
+        [HttpGet("listings")]
+        public IActionResult GetByZip()
         {
+            UserProfile user = GetCurrentUserProfile();
+            int zip = user.ZipCode;
             return Ok(_itemRepo.GetItemsByZipCode(zip));
         }
 

@@ -8,13 +8,14 @@ import { CurrentUserItems } from "./ShowUserItems";
 import { ItemDetails } from "./ItemDetails";
 import { ItemEdit } from "./EditItem";
 import { ItemDeactivate } from "./DeactivateItem";
+import { Feed } from "./Feed";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
     <main>
       <Switch>
         <Route path="/" exact>
-          {isLoggedIn ? <Hello /> : <Redirect to="/login" />}
+          {isLoggedIn ? <Feed /> : <Redirect to="/login" />}
         </Route>
 
         <Route path="/login">
