@@ -6,6 +6,7 @@ import Hello from "./Hello";
 import { NewItemForm } from "./AddItem";
 import { CurrentUserItems } from "./ShowUserItems";
 import { ItemDetails } from "./ItemDetails";
+import { ItemEdit } from "./EditItem";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -33,6 +34,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/item/details/:id">
           <ItemDetails />
+        </Route>
+
+        <Route path="/item/edit/:id">
+          <ItemEdit />
         </Route>
       </Switch>
     </main>

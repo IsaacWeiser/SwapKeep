@@ -1,10 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using SwapKeep.Models;
+using System.Collections.Generic;
 
 namespace SwapKeep.Repositories
 {
     public interface ICategoryRepository
     {
-        List<string> GetAllCategories();
+        List<Category> GetAllCategories();
         string getCategoryById(int id);
     }
 }

@@ -36,7 +36,8 @@ export const ItemDetails = () => {
       <h4>Available: </h4>
       <p>{`${item?.available}`}</p>
       <Link to={`/item/edit/${item.id}`}>edit</Link> |
-      <Link to={`/item/deactivate/${item.id}`}> deactivate</Link>
+      <Link to={`/item/deactivate/${item.id}`}> deactivate</Link> |
+      <Link to={`/item/myItems/`}>back</Link>
     </>
   );
 };

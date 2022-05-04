@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Configuration;
+using SwapKeep.Models;
 using SwapKeep.Utils;
 using System.Collections.Generic;
 
@@ -38,7 +39,7 @@ namespace SwapKeep.Repositories
             }
         }
 
-        public List<string> GetAllCategories()
+        public List<Category> GetAllCategories()
         {
 
             using (var conn = Connection)
@@ -49,14 +50,17 @@ namespace SwapKeep.Repositories
                 {
                     cmd.CommandText = @"SELECT Id, Name FROM Category";
 
-                    var categories = new List<string>();
+                    var categories = new List<Category>();
 
                     using (var reader = cmd.ExecuteReader())
                     {
 
                         while (reader.Read())
                         {
-                            categories.Add(DbUtils.GetString(reader, "Name"));
+                            categories.Add(new Category() { 
+                            Id = DbUtils.GetInt(reader, "Id"),
+                            Name =DbUtils.GetString(reader, "Name")
+                            });
                         }
 
                     }
