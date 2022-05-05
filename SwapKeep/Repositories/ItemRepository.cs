@@ -52,7 +52,7 @@ namespace SwapKeep.Repositories
             }
         }
 
-        public List<Item> GetItemsByZipCode(int zip)
+        public List<Item> GetItemsByZipCode(int zip, int usrId)
         {
             using (var conn = Connection)
             {
@@ -65,8 +65,9 @@ namespace SwapKeep.Repositories
                                         i.Description, i.Condition, i.Available, u.ZipCode
                                         FROM Item i
                                         JOIN UserProfile u on u.Id = i.UserId
-                                        WHERE u.ZipCode = @zip";
+                                        WHERE u.ZipCode = @zip AND i.UserId != @userId";
                     cmd.Parameters.AddWithValue("@zip", zip);
+                    cmd.Parameters.AddWithValue("@userId", usrId);
 
                     var items = new List<Item>();
 
@@ -191,6 +192,42 @@ namespace SwapKeep.Repositories
 
                     }
                     return item;
+                }
+            }
+        }
+
+        public List<Item> GetItemsNotOfCurrentUserAndOfACategoryAndAZipCode(int id, int catId, int zipCode)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"Select i.Id as 'itemId', i.Name as 'itemName', i.ImageUrl, i.CategoryId, i.UserId, u.ZipCode 
+                                        FROM Item i JOIN UserProfile u on u.id = i.UserId 
+                                        where UserId != @id and CategoryId =@catId and u.ZipCode = @zip";
+                    cmd.Parameters.AddWithValue("@id", id);
+                    cmd.Parameters.AddWithValue("@catId", catId);
+                    cmd.Parameters.AddWithValue("@zip", zipCode);
+
+                    var items = new List<Item>();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+                        while (reader.Read())
+                        {
+                            items.Add(new Item()
+                            {
+                                Id = DbUtils.GetInt(reader, "ItemId"),
+                                Name =DbUtils.GetString(reader, "itemName"),
+                                CategoryId = DbUtils.GetInt(reader, "CategoryId"),
+                                ImageUrl = DbUtils.GetString(reader, "ImageUrl"),
+                                UserId = DbUtils.GetInt(reader, "UserId"),
+                            });
+                        }
+                    }
+                    return items;
                 }
             }
         }

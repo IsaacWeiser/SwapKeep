@@ -27,7 +27,8 @@ namespace SwapKeep.Controllers
         {
             UserProfile user = GetCurrentUserProfile();
             int zip = user.ZipCode;
-            return Ok(_itemRepo.GetItemsByZipCode(zip));
+            int id = user.Id;
+            return Ok(_itemRepo.GetItemsByZipCode(zip, id));
         }
 
         [HttpGet]
@@ -49,6 +50,15 @@ namespace SwapKeep.Controllers
         public IActionResult GetItemById(int id)
         {
             return Ok(_itemRepo.GetItemById(id));
+        }
+
+        [HttpGet("category/{catId}")]
+        public IActionResult GetItemsByCategory(int catId)
+        {
+            UserProfile user = GetCurrentUserProfile();
+            int usrId = user.Id;
+            int zip = user.ZipCode;
+            return Ok(_itemRepo.GetItemsNotOfCurrentUserAndOfACategoryAndAZipCode(usrId,catId,zip));
         }
 
         [HttpPost]
