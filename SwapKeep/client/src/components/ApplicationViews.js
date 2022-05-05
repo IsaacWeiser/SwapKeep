@@ -9,10 +9,12 @@ import { ItemDetails } from "./ItemDetails";
 import { ItemEdit } from "./EditItem";
 import { ItemDeactivate } from "./DeactivateItem";
 import { Feed } from "./Feed";
+import { NavBar } from "./NavBar";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
     <main>
+      {isLoggedIn ? <NavBar /> : ""}
       <Switch>
         <Route path="/" exact>
           {isLoggedIn ? <Feed /> : <Redirect to="/login" />}
@@ -27,7 +29,7 @@ export default function ApplicationViews({ isLoggedIn }) {
         </Route>
 
         <Route path="/item/new">
-          {isLoggedIn ? <NewItemForm /> : <Redirect to="/login" />}
+          <NewItemForm />
         </Route>
 
         <Route path="/item/myItems">
