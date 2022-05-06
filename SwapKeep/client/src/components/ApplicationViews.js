@@ -10,6 +10,7 @@ import { ItemEdit } from "./EditItem";
 import { ItemDeactivate } from "./DeactivateItem";
 import { Feed } from "./Feed";
 import { NavBar } from "./NavBar";
+import { MakeOffer } from "./CreateOffer";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -42,6 +43,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/item/edit/:id">
           <ItemEdit />
+        </Route>
+
+        <Route path="/item/offer/create/:id">
+          <MakeOffer />
         </Route>
 
         <Route path="/item/deactivate/:id">
