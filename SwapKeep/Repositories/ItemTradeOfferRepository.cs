@@ -295,5 +295,31 @@ namespace SwapKeep.Repositories
             }
         }
 
+        public void Update(ItemTradeOffer trade)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"
+                        UPDATE ItemTradeOffer
+                           SET 
+                               Party1ItemId= @p1ItemId,
+                               Party2ItemId = @p2ItemId,
+                               StatusId = @statusId
+                         WHERE Id = @Id";
+
+                    DbUtils.AddParameter(cmd, "@p1ItemId", trade.Party1ItemId);
+                    DbUtils.AddParameter(cmd, "@p2ItemId", trade.Party2ItemId);
+                    DbUtils.AddParameter(cmd, "@statusId", trade.StatusId);
+                    DbUtils.AddParameter(cmd, "@Id", trade.Id);
+                    
+
+                    cmd.ExecuteNonQuery();
+                }
+            }
+        }
+
     }
 }

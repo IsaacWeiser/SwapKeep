@@ -11,6 +11,7 @@ namespace SwapKeep.Repositories
         public List<ItemTradeOffer> GetOpenTradesOfferedToUserId(int userId);
         public List<ItemTradeOffer> GetClosedTradesUserOffered(int userId);
         public List<ItemTradeOffer> GetClosedTradesOfferedToUser(int userId);
+        public void Update(ItemTradeOffer trade);
         ItemTradeOffer GetById(int id);
         public void DeleteOfferById(int id);
     }

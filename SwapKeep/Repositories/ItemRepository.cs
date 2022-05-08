@@ -65,7 +65,7 @@ namespace SwapKeep.Repositories
                                         i.Description, i.Condition, i.Available, u.ZipCode
                                         FROM Item i
                                         JOIN UserProfile u on u.Id = i.UserId
-                                        WHERE u.ZipCode = @zip AND i.UserId != @userId";
+                                        WHERE u.ZipCode = @zip AND i.UserId != @userId AND i.Available = 'true'";
                     cmd.Parameters.AddWithValue("@zip", zip);
                     cmd.Parameters.AddWithValue("@userId", usrId);
 

@@ -4,6 +4,7 @@ import { getOpenTradesOfferedToId } from "../modules/TradeManager";
 import { getClosedTradesOfferedById } from "../modules/TradeManager";
 import { getClosedTradesOfferedToId } from "../modules/TradeManager";
 import { getAllItems } from "../modules/itemManager";
+import { Link } from "react-router-dom";
 
 export const ViewTrades = () => {
   const [openTradesOfferedByUser, setOpenTradesOfferedByUser] = useState([]);
@@ -59,7 +60,7 @@ export const ViewTrades = () => {
                 }
               ></img>
             </a>
-            <button>Rescind Offer</button>
+            <Link to={`/offers/rescind/${offer.id}`}>Rescind Offer</Link>
           </div>
         );
       })}
@@ -91,8 +92,8 @@ export const ViewTrades = () => {
                 }
               ></img>
             </a>
-            <button>Accept</button>
-            <button>Decline</button>
+            <Link to={`/offers/accept/${offer.id}`}>Accept</Link> |
+            <Link to={`/offers/decline/${offer.id}`}>Decline</Link>
           </div>
         );
       })}
