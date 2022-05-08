@@ -11,6 +11,7 @@ import { ItemDeactivate } from "./DeactivateItem";
 import { Feed } from "./Feed";
 import { NavBar } from "./NavBar";
 import { MakeOffer } from "./CreateOffer";
+import { ViewTrades } from "./ViewTrades";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -51,6 +52,10 @@ export default function ApplicationViews({ isLoggedIn }) {
 
         <Route path="/item/deactivate/:id">
           <ItemDeactivate />
+        </Route>
+
+        <Route path="/offers">
+          <ViewTrades />
         </Route>
       </Switch>
     </main>
