@@ -35,19 +35,132 @@ export const ViewTrades = () => {
       {openTradesOfferedByUser.map((offer) => {
         return (
           <div>
-            <p>{items.find((item) => item.id === offer.party1ItemId).name}</p>
-            <img
-              src={
-                items.find((item) => item.id === offer.party1ItemId).imageUrl
-              }
-            ></img>
+            <a
+              href={`/item/details/${
+                items.find((item) => item.id === offer.party1ItemId).id
+              }`}
+            >
+              <p>{items.find((item) => item.id === offer.party1ItemId).name}</p>
+              <img
+                src={
+                  items.find((item) => item.id === offer.party1ItemId).imageUrl
+                }
+              ></img>
+            </a>
+            <a
+              href={`/item/details/${
+                items.find((item) => item.id === offer.party2ItemId).id
+              }`}
+            >
+              <p>{items.find((item) => item.id === offer.party2ItemId).name}</p>
+              <img
+                src={
+                  items.find((item) => item.id === offer.party2ItemId).imageUrl
+                }
+              ></img>
+            </a>
+            <button>Rescind Offer</button>
           </div>
         );
       })}
       <h2>Offered to you</h2>
+      {openTradesOfferedToUser.map((offer) => {
+        return (
+          <div>
+            <a
+              href={`/item/details/${
+                items.find((item) => item.id === offer.party1ItemId).id
+              }`}
+            >
+              <p>{items.find((item) => item.id === offer.party1ItemId).name}</p>
+              <img
+                src={
+                  items.find((item) => item.id === offer.party1ItemId).imageUrl
+                }
+              ></img>
+            </a>
+            <a
+              href={`/item/details/${
+                items.find((item) => item.id === offer.party2ItemId).id
+              }`}
+            >
+              <p>{items.find((item) => item.id === offer.party2ItemId).name}</p>
+              <img
+                src={
+                  items.find((item) => item.id === offer.party2ItemId).imageUrl
+                }
+              ></img>
+            </a>
+            <button>Accept</button>
+            <button>Decline</button>
+          </div>
+        );
+      })}
       <h1>Closed Trades</h1>
       <h2>you offered</h2>
+      {closedTradesOfferedByUser.map((offer) => {
+        return (
+          <div>
+            <a
+              href={`/item/details/${
+                items.find((item) => item.id === offer.party1ItemId).id
+              }`}
+            >
+              <p>{items.find((item) => item.id === offer.party1ItemId).name}</p>
+              <img
+                src={
+                  items.find((item) => item.id === offer.party1ItemId).imageUrl
+                }
+              ></img>
+            </a>
+            <a
+              href={`/item/details/${
+                items.find((item) => item.id === offer.party2ItemId).id
+              }`}
+            >
+              <p>{items.find((item) => item.id === offer.party2ItemId).name}</p>
+              <img
+                src={
+                  items.find((item) => item.id === offer.party2ItemId).imageUrl
+                }
+              ></img>
+            </a>
+            <p>{`result: ${offer.status.name}`}</p>
+          </div>
+        );
+      })}
       <h2>Offered to you</h2>
+      {closedTradesOfferedToUser.map((offer) => {
+        return (
+          <div>
+            <a
+              href={`/item/details/${
+                items.find((item) => item.id === offer.party1ItemId).id
+              }`}
+            >
+              <p>{items.find((item) => item.id === offer.party1ItemId).name}</p>
+              <img
+                src={
+                  items.find((item) => item.id === offer.party1ItemId).imageUrl
+                }
+              ></img>
+            </a>
+            <a
+              href={`/item/details/${
+                items.find((item) => item.id === offer.party2ItemId).id
+              }`}
+            >
+              <p>{items.find((item) => item.id === offer.party2ItemId).name}</p>
+              <img
+                src={
+                  items.find((item) => item.id === offer.party2ItemId).imageUrl
+                }
+              ></img>
+            </a>
+            <p>{`result: ${offer.status.name}`}</p>
+          </div>
+        );
+      })}
     </>
   );
 };

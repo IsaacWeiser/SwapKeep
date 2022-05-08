@@ -13,5 +13,7 @@
         public Item p1Item { get; set; }
 
         public Item p2Item { get; set; }
+
+        public Status Status { get; set; }
     }
 }

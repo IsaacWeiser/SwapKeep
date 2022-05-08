@@ -213,12 +213,13 @@ namespace SwapKeep.Repositories
 
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"select o.Id as 'offerId', o.Party1ItemId, o.Party2ItemId, o.StatusId, 
-                                        s.Name, i.UserId as 'partyUserId', i.ImageUrl, i.name as 'itemName'
+                    cmd.CommandText = @"select o.Id as 'offerId', o.Party1ItemId, o.Party2ItemId, 
+                                        s.Id as 'StatusId', s.Name as 'statusName', i.UserId as 'partyUserId'
                                         from ItemTradeOffer o 
                                         join Status s on s.Id = o.StatusId 
                                         join Item i on i.Id = o.Party1ItemId
-                                        where s.Name ='Closed' and i.UserId = @uid";
+                                        where (s.Name ='Closed' OR s.Name='Accepted' OR s.Name ='Declined' OR s.Name= 'Rescinded') 
+                                        AND i.UserId =@uid;";
                     cmd.Parameters.AddWithValue("@uid", userId);
 
                     var offers = new List<ItemTradeOffer>();
@@ -233,7 +234,11 @@ namespace SwapKeep.Repositories
                                 Id = DbUtils.GetInt(reader, "offerId"),
                                 Party1ItemId = DbUtils.GetInt(reader, "Party1ItemId"),
                                 Party2ItemId = DbUtils.GetInt(reader, "Party2ItemId"),
-                                StatusId = DbUtils.GetInt(reader, "StatusId")
+                                StatusId = DbUtils.GetInt(reader, "StatusId"),
+                                Status = new Status()
+                                {
+                                    Name = DbUtils.GetString(reader, "statusName")
+                                }
 
                             });
                         }
@@ -253,12 +258,13 @@ namespace SwapKeep.Repositories
 
                 using (var cmd = conn.CreateCommand())
                 {
-                    cmd.CommandText = @"select o.Id as 'offerId', o.Party1ItemId, o.Party2ItemId, o.StatusId, 
-                                        s.Name, i.UserId as 'partyUserId', i.ImageUrl, i.name as 'itemName'
+                    cmd.CommandText = @"select o.Id as 'offerId', o.Party1ItemId, o.Party2ItemId, 
+                                        s.Id as 'StatusId', s.Name as 'statusName', i.UserId as 'partyUserId'
                                         from ItemTradeOffer o 
                                         join Status s on s.Id = o.StatusId 
                                         join Item i on i.Id = o.Party2ItemId
-                                        where s.Name ='Closed' and i.UserId = @uid";
+                                        where (s.Name ='Closed' OR s.Name='Accepted' OR s.Name ='Declined' OR s.Name= 'Rescinded') 
+                                        AND i.UserId =@uid;";
                     cmd.Parameters.AddWithValue("@uid", userId);
 
                     var offers = new List<ItemTradeOffer>();
@@ -273,7 +279,11 @@ namespace SwapKeep.Repositories
                                 Id = DbUtils.GetInt(reader, "offerId"),
                                 Party1ItemId = DbUtils.GetInt(reader, "Party1ItemId"),
                                 Party2ItemId = DbUtils.GetInt(reader, "Party2ItemId"),
-                                StatusId = DbUtils.GetInt(reader, "StatusId")
+                                StatusId = DbUtils.GetInt(reader, "StatusId"),
+                                Status = new Status()
+                                {
+                                    Name = DbUtils.GetString(reader, "statusName")
+                                }
 
                             });
                         }
