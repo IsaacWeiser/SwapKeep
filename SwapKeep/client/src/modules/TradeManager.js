@@ -62,3 +62,77 @@ export const addTrade = (trade) => {
     });
   });
 };
+
+export const getOpenTradesOfferedById = () => {
+  return getToken().then((token) => {
+    return fetch(`${apiUrl}/open/offersfrom/`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error(
+          "An unknown error occurred while trying to get quotes."
+        );
+      }
+    });
+  });
+};
+
+export const getOpenTradesOfferedToId = () => {
+  return getToken().then((token) => {
+    return fetch(`${apiUrl}/open/offersto/`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error(
+          "An unknown error occurred while trying to get quotes."
+        );
+      }
+    });
+  });
+};
+export const getClosedTradesOfferedById = () => {
+  return getToken().then((token) => {
+    return fetch(`${apiUrl}/closed/offersfrom/`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error(
+          "An unknown error occurred while trying to get quotes."
+        );
+      }
+    });
+  });
+};
+export const getClosedTradesOfferedToId = () => {
+  return getToken().then((token) => {
+    return fetch(`${apiUrl}/closed/offersto/`, {
+      method: "GET",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else {
+        throw new Error(
+          "An unknown error occurred while trying to get quotes."
+        );
+      }
+    });
+  });
+};

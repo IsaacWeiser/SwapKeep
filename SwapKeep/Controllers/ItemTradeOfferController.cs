@@ -38,6 +38,54 @@ namespace SwapKeep.Controllers
             return Ok(_offerRepo.GetById(id));
         }
 
+        [HttpGet("open/offersfrom/")]
+        public IActionResult GetOpenTradesOfferedFrom()
+        {
+            UserProfile user = GetCurrentUserProfile();
+            int id = user.Id;
+            if (_offerRepo.GetById(id) == null)
+            {
+                return NotFound();
+            }
+            return Ok(_offerRepo.GetOpenTradesOfferingByUserId(id));
+        }
+
+        [HttpGet("open/offersto/")]
+        public IActionResult GetOpenTradesOffersTo()
+        {
+            UserProfile user = GetCurrentUserProfile();
+            int id = user.Id;
+            if (_offerRepo.GetById(id) == null)
+            {
+                return NotFound();
+            }
+            return Ok(_offerRepo.GetOpenTradesOfferedToUserId(id));
+        }
+
+        [HttpGet("closed/offersfrom/")]
+        public IActionResult GetTradesOfferedFrom()
+        {
+            UserProfile user = GetCurrentUserProfile();
+            int id = user.Id;
+            if (_offerRepo.GetById(id) == null)
+            {
+                return NotFound();
+            }
+            return Ok(_offerRepo.GetClosedTradesUserOffered(id));
+        }
+
+        [HttpGet("closed/offersto/")]
+        public IActionResult GetClosedTradesOfferedTo()
+        {
+            UserProfile user = GetCurrentUserProfile();
+            int id = user.Id;
+            if (_offerRepo.GetById(id) == null)
+            {
+                return NotFound();
+            }
+            return Ok(_offerRepo.GetClosedTradesOfferedToUser(id));
+        }
+
         [HttpPost]
         public IActionResult Post(ItemTradeOffer offer)
         {
