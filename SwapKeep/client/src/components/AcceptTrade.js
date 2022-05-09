@@ -17,8 +17,7 @@ export const AcceptTrade = () => {
   trade.statusId = 3;
   const accept = (evt) => {
     evt.preventDefault();
-    updateTrade(trade);
-    history.go(-1);
+    updateTrade(trade).then(() => history.go(-1));
   };
 
   return (

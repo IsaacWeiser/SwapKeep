@@ -38,6 +38,7 @@ namespace SwapKeep.Controllers
             return Ok(_offerRepo.GetById(id));
         }
 
+        /*
         [HttpGet("open/offersfrom/")]
         public IActionResult GetOpenTradesOfferedFrom()
         {
@@ -84,6 +85,30 @@ namespace SwapKeep.Controllers
                 return NotFound();
             }
             return Ok(_offerRepo.GetClosedTradesOfferedToUser(id));
+        } */
+
+        [HttpGet("open/")]
+        public IActionResult GetOpenTrades()
+        {
+            UserProfile user = GetCurrentUserProfile();
+            int id = user.Id;
+            if (_offerRepo.GetById(id) == null)
+            {
+                return NotFound();
+            }
+            return Ok(_offerRepo.GetOpenTradesByUserId(id));
+        }
+
+        [HttpGet("closed/")]
+        public IActionResult GetClosedTrades()
+        {
+            UserProfile user = GetCurrentUserProfile();
+            int id = user.Id;
+            if (_offerRepo.GetById(id) == null)
+            {
+                return NotFound();
+            }
+            return Ok(_offerRepo.GetClosedTradesByUserId(id));
         }
 
         [HttpPost]

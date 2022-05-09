@@ -110,7 +110,7 @@ export const ItemEdit = () => {
       <h4>Category: </h4>
       <select id="categorySelect" onChange={trackCategory}>
         {categories?.map((cat) => (
-          <option value={cat.id}>{`${cat.name}`}</option>
+          <option key={cat.id} value={cat.id}>{`${cat.name}`}</option>
         ))}
       </select>
       <h4>Available: </h4>

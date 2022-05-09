@@ -63,9 +63,9 @@ export const addTrade = (trade) => {
   });
 };
 
-export const getOpenTradesOfferedById = () => {
+export const getOpenTrades = () => {
   return getToken().then((token) => {
-    return fetch(`${apiUrl}/open/offersfrom/`, {
+    return fetch(`${apiUrl}/open/`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -82,7 +82,7 @@ export const getOpenTradesOfferedById = () => {
   });
 };
 
-export const getOpenTradesOfferedToId = () => {
+/*export const getOpenTradesOfferedToId = () => {
   return getToken().then((token) => {
     return fetch(`${apiUrl}/open/offersto/`, {
       method: "GET",
@@ -117,10 +117,10 @@ export const getClosedTradesOfferedById = () => {
       }
     });
   });
-};
-export const getClosedTradesOfferedToId = () => {
+}; */
+export const getClosedTrades = () => {
   return getToken().then((token) => {
-    return fetch(`${apiUrl}/closed/offersto/`, {
+    return fetch(`${apiUrl}/closed/`, {
       method: "GET",
       headers: {
         Authorization: `Bearer ${token}`,

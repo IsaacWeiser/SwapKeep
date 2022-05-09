@@ -7,24 +7,33 @@ import { getAllItemsOfCategoryNotOfUserAndOfZipCode } from "../modules/itemManag
 export const Feed = () => {
   const [items, setItems] = useState([]);
   const [categories, setCategories] = useState([]);
-  const [filterCategoryId, setFilterCategoryId] = useState(0);
+  const [filterCategoryId, setFilterCategoryId] = useState();
 
-  useEffect(() => {
+  /*useEffect(() => {
+    debugger;
     getAllItemsOfCategoryNotOfUserAndOfZipCode(filterCategoryId).then((res) =>
       setItems(res)
     );
-  }, [filterCategoryId]);
+  }, [filterCategoryId]); */
 
   useEffect(() => {
-    getAllItemsOfUserZip().then((res) => setItems(res));
+    Promise.all([getAllItemsOfUserZip(), getAllCategories()]).then(
+      ([gaiouz, gac]) => {
+        setItems(gaiouz);
+        setCategories(gac);
+      }
+    );
+    //getAllItemsOfUserZip().then((res) => setItems(res));
   }, []);
 
-  useEffect(() => {
+  /*useEffect(() => {
     getAllCategories().then((res) => setCategories(res));
-  }, []);
+  }, []); */
 
   const filterView = (evt) => {
-    setFilterCategoryId(evt.target.value);
+    getAllItemsOfCategoryNotOfUserAndOfZipCode(evt.target.value).then((res) =>
+      setItems(res)
+    );
   };
 
   return (
@@ -33,13 +42,17 @@ export const Feed = () => {
       <select onChange={filterView}>
         <option value="0">FIlter listings By Category</option>
         {categories?.map((cat) => {
-          return <option value={cat?.id}>{cat?.name}</option>;
+          return (
+            <option key={cat.id} value={cat?.id}>
+              {cat?.name}
+            </option>
+          );
         })}
       </select>
       <div id="feedDisplay">
         {items?.map((item) => {
           return (
-            <a href={`/item/details/${item?.id}`}>
+            <a key={item.id} href={`/item/details/${item?.id}`}>
               <h2>{item?.name}</h2>
               <img src={item?.imageUrl}></img>
             </a>

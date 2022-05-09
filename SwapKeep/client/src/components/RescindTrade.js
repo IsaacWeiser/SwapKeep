@@ -17,8 +17,9 @@ export const RescindTrade = () => {
   trade.statusId = 5;
   const rescind = (evt) => {
     evt.preventDefault();
-    updateTrade(trade);
-    history.go(-1);
+    updateTrade(trade).then(() => {
+      history.go(-1);
+    });
   };
 
   return (

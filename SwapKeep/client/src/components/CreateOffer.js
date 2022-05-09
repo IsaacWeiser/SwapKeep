@@ -2,11 +2,12 @@ import { useState, useEffect } from "react";
 import { getItemById } from "../modules/itemManager";
 import { getAllItemsOfUser } from "../modules/itemManager";
 import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { addTrade } from "../modules/TradeManager";
 
 export const MakeOffer = () => {
   const { id } = useParams();
+  const history = useHistory();
 
   const [itemWanted, setItemWanted] = useState({});
   const [itemsToOffer, setItemsToOffer] = useState([]);
@@ -16,13 +17,21 @@ export const MakeOffer = () => {
     statusId: 1,
   });
 
-  useEffect(() => {
-    getItemById(id).then((res) => setItemWanted(res));
-  }, []);
+  const plzWork = () => {};
 
   useEffect(() => {
-    getAllItemsOfUser().then((res) => setItemsToOffer(res));
+    Promise.all([getItemById(id), getAllItemsOfUser()]).then(
+      ([gibi, gaiou]) => {
+        setItemWanted(gibi);
+        setItemsToOffer(gaiou);
+      }
+    );
+    // getItemById(id).then((res) => setItemWanted(res));
   }, []);
+
+  /*useEffect(() => {
+    getAllItemsOfUser().then((res) => setItemsToOffer(res));
+  }, []); */
 
   useEffect(() => {
     const state = { ...tradeOffer };
@@ -40,7 +49,7 @@ export const MakeOffer = () => {
     if (tradeOffer.party1ItemId != 0) {
       evt.preventDefault();
 
-      addTrade(tradeOffer);
+      addTrade(tradeOffer).then(() => history.push(`/offers/`));
     } else {
       alert("please choose an item to offer");
     }
@@ -56,7 +65,11 @@ export const MakeOffer = () => {
       <select onChange={trackParty1}>
         <option value="0">Select which item you want to offer in return</option>
         {itemsToOffer.map((item) => {
-          return <option value={item.id}>{item.name}</option>;
+          return (
+            <option key={item.id} value={item.id}>
+              {item.name}
+            </option>
+          );
         })}
       </select>
       <button onClick={submitOffer}>Submit</button>

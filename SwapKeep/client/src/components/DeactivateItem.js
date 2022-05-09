@@ -20,8 +20,7 @@ export const ItemDeactivate = () => {
   }, []);
 
   const confirmDeactivate = () => {
-    updateItem(item);
-    history.go(-1);
+    updateItem(item).then(() => history.go(-1));
   };
 
   return (
