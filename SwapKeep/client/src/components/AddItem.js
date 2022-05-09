@@ -114,6 +114,7 @@ export const NewItemForm = () => {
     } else {
       addItem(item);
       upSub(submissionTracker + 1);
+      history.push(`/item/myItems`);
     }
   };
 
@@ -128,7 +129,7 @@ export const NewItemForm = () => {
       <select id="newCatIdInp" onChange={trackCategoryId}>
         <option value="0">Please Select an Option</option>
         {categories.map((cat) => {
-          return <option value={i++}>{cat}</option>;
+          return <option value={i++}>{`${cat.name}`}</option>;
         })}
       </select>
       <p>Enter an item description</p>

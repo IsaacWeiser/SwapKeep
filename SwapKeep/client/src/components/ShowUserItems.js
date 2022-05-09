@@ -20,9 +20,13 @@ export const CurrentUserItems = () => {
             <button>
               <Link to={`/item/details/${item.id}`}>View</Link>
             </button>
-            <button>
-              <Link to={`/item/deactivate/${item.id}`}>Deactivate</Link>
-            </button>
+            {item.available == true ? (
+              <button>
+                <Link to={`/item/deactivate/${item.id}`}>Deactivate</Link>
+              </button>
+            ) : (
+              ""
+            )}
           </div>
         ))}
       </div>

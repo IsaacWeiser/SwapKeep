@@ -136,3 +136,26 @@ export const getClosedTradesOfferedToId = () => {
     });
   });
 };
+
+export const updateTrade = (trade) => {
+  return getToken().then((token) => {
+    return fetch(`${apiUrl}/${trade.id}`, {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(trade),
+    }).then((resp) => {
+      if (resp.ok) {
+        return resp.json();
+      } else if (resp.status === 401) {
+        throw new Error("Unauthorized");
+      } else {
+        throw new Error(
+          "An unknown error occurred while trying to save changes to trade."
+        );
+      }
+    });
+  });
+};

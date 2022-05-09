@@ -65,7 +65,7 @@ namespace SwapKeep.Repositories
                                         i.Description, i.Condition, i.Available, u.ZipCode
                                         FROM Item i
                                         JOIN UserProfile u on u.Id = i.UserId
-                                        WHERE u.ZipCode = @zip AND i.UserId != @userId";
+                                        WHERE u.ZipCode = @zip AND i.UserId != @userId AND i.Available = 'true'";
                     cmd.Parameters.AddWithValue("@zip", zip);
                     cmd.Parameters.AddWithValue("@userId", usrId);
 
@@ -206,7 +206,7 @@ namespace SwapKeep.Repositories
                 {
                     cmd.CommandText = @"Select i.Id as 'itemId', i.Name as 'itemName', i.ImageUrl, i.CategoryId, i.UserId, u.ZipCode 
                                         FROM Item i JOIN UserProfile u on u.id = i.UserId 
-                                        where UserId != @id and CategoryId =@catId and u.ZipCode = @zip";
+                                        where UserId != @id and CategoryId =@catId and u.ZipCode = @zip and i.Available='true'";
                     cmd.Parameters.AddWithValue("@id", id);
                     cmd.Parameters.AddWithValue("@catId", catId);
                     cmd.Parameters.AddWithValue("@zip", zipCode);

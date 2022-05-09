@@ -101,6 +101,18 @@ namespace SwapKeep.Controllers
             return NoContent();
         }
 
+        [HttpPut("{id}")]
+        public IActionResult Put(int id, ItemTradeOffer offer)
+        {
+            if (id != offer.Id)
+            {
+                return BadRequest();
+            }
+
+            _offerRepo.Update(offer);
+            return Ok(offer);
+        }
+
         private UserProfile GetCurrentUserProfile()
         {
             var firebaseUserId = User.FindFirst(ClaimTypes.NameIdentifier).Value;

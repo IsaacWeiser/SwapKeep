@@ -12,6 +12,9 @@ import { Feed } from "./Feed";
 import { NavBar } from "./NavBar";
 import { MakeOffer } from "./CreateOffer";
 import { ViewTrades } from "./ViewTrades";
+import { RescindTrade } from "./RescindTrade";
+import { AcceptTrade } from "./AcceptTrade";
+import { DeclineTrade } from "./DeclineTrade";
 
 export default function ApplicationViews({ isLoggedIn }) {
   return (
@@ -54,8 +57,20 @@ export default function ApplicationViews({ isLoggedIn }) {
           <ItemDeactivate />
         </Route>
 
-        <Route path="/offers">
+        <Route path="/offers" exact>
           <ViewTrades />
+        </Route>
+
+        <Route path="/offers/rescind/:id">
+          <RescindTrade />
+        </Route>
+
+        <Route path="/offers/accept/:id">
+          <AcceptTrade />
+        </Route>
+
+        <Route path="/offers/decline/:id">
+          <DeclineTrade />
         </Route>
       </Switch>
     </main>

@@ -1,4 +1,5 @@
 import { logout } from "../modules/authManager";
+import { Link } from "react-router-dom";
 
 export const NavBar = () => {
   const logO = () => {
@@ -8,18 +9,15 @@ export const NavBar = () => {
   return (
     <>
       <div>
-        <h1>SwapKeep</h1>
-        <a>
-          <p>Listings</p>
-        </a>
-        <select>
-          <option>Items</option>
-          <option>My Items</option>
-          <option>Create Item</option>
-        </select>
-        <a>
-          <p>Offers</p>
-        </a>
+        <h1>
+          <Link to={`/`}>SwapKeep</Link>
+        </h1>
+        <Link to={`/`}>
+          <p>Listings </p>
+        </Link>
+        |<Link to={`/item/myItems/`}> My Items </Link>|
+        <Link to={`/item/new/`}> Create New Item </Link>|
+        <Link to={`/offers/`}> My Offers </Link>
         <button onClick={logO}>Logout</button>
       </div>
     </>

@@ -85,9 +85,7 @@ export const ItemEdit = () => {
 
     setItem(state);
 
-    updateItem(item);
-
-    history.go(-1);
+    updateItem(item).then(() => history.push(`/item/details/${item.id}`));
   };
 
   let i = 1;
