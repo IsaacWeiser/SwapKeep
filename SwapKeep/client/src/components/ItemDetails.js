@@ -31,7 +31,7 @@ export const ItemDetails = () => {
   };
 
   const back = () => {
-    history.go(-1);
+    history.push(`/item/myItems`);
   };
 
   return (
