@@ -1,9 +1,12 @@
 import { logout } from "../modules/authManager";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export const NavBar = () => {
+  const history = useHistory();
+
   const logO = () => {
     logout();
+    history.push(`/`);
   };
 
   return (

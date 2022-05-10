@@ -295,6 +295,130 @@ namespace SwapKeep.Repositories
             }
         }
 
+        public List<ItemTradeOffer> GetOpenTradesByUserId(int userId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"select ito.Id as 'offerId', s.Id as StatusId, s.Name as statusName,
+                                        p1Item.Id as Party1ItemId, p1Item.UserId as p1User, p1Item.Name as p1ItemName, p1Item.ImageUrl as p1Img,  
+                                        p2Item.Id as Party2ItemId, p2Item.UserId as p2User, p2Item.Name as p2ItemName, p2Item.ImageUrl as p2Img
+                                        from ItemTradeOffer ito
+                                        join Item as p1Item on p1Item.Id = ito.Party1ItemId
+                                        join Item as p2Item on p2Item.Id = ito.Party2ItemId
+                                        join Status s on s.Id = ito.StatusId
+                                        where (p1Item.UserId = @uid or p2Item.UserId =@uid) and s.Name = 'Open'";
+                    cmd.Parameters.AddWithValue("@uid", userId);
+
+                    var offers = new List<ItemTradeOffer>();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            offers.Add(new ItemTradeOffer()
+                            {
+                                Id = DbUtils.GetInt(reader, "offerId"),
+                                Party1ItemId = DbUtils.GetInt(reader, "Party1ItemId"),
+                                Party2ItemId = DbUtils.GetInt(reader, "Party2ItemId"),
+                                StatusId = DbUtils.GetInt(reader, "StatusId"),
+                                P1Item = new Item ()
+                                {
+                                    Id = DbUtils.GetInt(reader, "Party1ItemId"),
+                                    Name= DbUtils.GetString(reader, "p1ItemName"),
+                                    ImageUrl = DbUtils.GetString(reader, "p1Img"),
+                                    UserId =DbUtils.GetInt(reader, "p1User")
+                                },
+                                P2Item = new Item()
+                                {
+                                    Id = DbUtils.GetInt(reader, "Party2ItemId"),
+                                    Name = DbUtils.GetString(reader, "p2ItemName"),
+                                    ImageUrl = DbUtils.GetString(reader, "p2Img"),
+                                    UserId = DbUtils.GetInt(reader, "p2User")
+                                },
+                                Status = new Status()
+                                {
+                                    Id= DbUtils.GetInt(reader,"StatusId"),
+                                    Name =DbUtils.GetString(reader, "statusName")
+                                }
+
+
+                            });
+                        }
+
+                        return offers;
+
+                    }
+                }
+            }
+        }
+
+        public List<ItemTradeOffer> GetClosedTradesByUserId(int userId)
+        {
+            using (var conn = Connection)
+            {
+                conn.Open();
+
+                using (var cmd = conn.CreateCommand())
+                {
+                    cmd.CommandText = @"select ito.Id as 'offerId', s.Id as StatusId, s.Name as statusName,
+                                        p1Item.Id as Party1ItemId, p1Item.UserId as p1User, p1Item.Name as p1ItemName, p1Item.ImageUrl as p1Img,  
+                                        p2Item.Id as Party2ItemId, p2Item.UserId as p2User, p2Item.Name as p2ItemName, p2Item.ImageUrl as p2Img
+                                        from ItemTradeOffer ito
+                                        join Item as p1Item on p1Item.Id = ito.Party1ItemId
+                                        join Item as p2Item on p2Item.Id = ito.Party2ItemId
+                                        join Status s on s.Id = ito.StatusId
+                                        where (p1Item.UserId = @uid or p2Item.UserId =@uid) and (s.Name = 'Closed' or s.Name='Accepted' or s.Name='Declined' or s.Name = 'Rescinded' )";
+                    cmd.Parameters.AddWithValue("@uid", userId);
+
+                    var offers = new List<ItemTradeOffer>();
+
+                    using (var reader = cmd.ExecuteReader())
+                    {
+
+                        while (reader.Read())
+                        {
+                            offers.Add(new ItemTradeOffer()
+                            {
+                                Id = DbUtils.GetInt(reader, "offerId"),
+                                Party1ItemId = DbUtils.GetInt(reader, "Party1ItemId"),
+                                Party2ItemId = DbUtils.GetInt(reader, "Party2ItemId"),
+                                StatusId = DbUtils.GetInt(reader, "StatusId"),
+                                P1Item = new Item()
+                                {
+                                    Id = DbUtils.GetInt(reader, "Party1ItemId"),
+                                    Name = DbUtils.GetString(reader, "p1ItemName"),
+                                    ImageUrl = DbUtils.GetString(reader, "p1Img"),
+                                    UserId = DbUtils.GetInt(reader, "p1User")
+                                },
+                                P2Item = new Item()
+                                {
+                                    Id = DbUtils.GetInt(reader, "Party2ItemId"),
+                                    Name = DbUtils.GetString(reader, "p2ItemName"),
+                                    ImageUrl = DbUtils.GetString(reader, "p2Img"),
+                                    UserId = DbUtils.GetInt(reader, "p2User")
+                                },
+                                Status = new Status()
+                                {
+                                    Id = DbUtils.GetInt(reader, "StatusId"),
+                                    Name = DbUtils.GetString(reader, "statusName")
+                                }
+
+
+                            });
+                        }
+
+                        return offers;
+
+                    }
+                }
+            }
+        }
+
         public void Update(ItemTradeOffer trade)
         {
             using (var conn = Connection)

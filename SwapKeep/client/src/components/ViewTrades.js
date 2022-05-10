@@ -1,162 +1,96 @@
 import { useState, useEffect } from "react";
-import { getOpenTradesOfferedById } from "../modules/TradeManager";
-import { getOpenTradesOfferedToId } from "../modules/TradeManager";
-import { getClosedTradesOfferedById } from "../modules/TradeManager";
-import { getClosedTradesOfferedToId } from "../modules/TradeManager";
-import { getAllItems } from "../modules/itemManager";
+import { getOpenTrades } from "../modules/TradeManager";
+import { getClosedTrades } from "../modules/TradeManager";
+import { getCurrentUserId } from "../modules/userProfileManager";
 import { Link } from "react-router-dom";
 
 export const ViewTrades = () => {
-  const [openTradesOfferedByUser, setOpenTradesOfferedByUser] = useState([]);
-  const [openTradesOfferedToUser, setOpenTradesOfferedToUser] = useState([]);
-  const [closedTradesOfferedByUser, setClosedTradesOfferedByUser] = useState(
-    []
-  );
-  const [closedTradesOfferedToUser, setClosedTradesOfferedToUser] = useState(
-    []
-  );
-  const [items, setItems] = useState([]);
+  const [openTrades, setOpenTrades] = useState([]);
+  const [closedTrades, setClosedTrades] = useState([]);
+  const [currentUserId, setCurrentUserId] = useState();
 
   useEffect(() => {
-    getAllItems().then((res) => setItems(res));
-    getOpenTradesOfferedById().then((res) => setOpenTradesOfferedByUser(res));
+    Promise.all([getCurrentUserId(), getOpenTrades(), getClosedTrades()]).then(
+      ([cuid, ot, ct]) => {
+        setCurrentUserId(cuid);
+        setOpenTrades(ot);
+        setClosedTrades(ct);
+      }
+    );
+    /* getOpenTradesOfferedById().then((res) => setOpenTrades(res));
     getOpenTradesOfferedToId().then((res) => setOpenTradesOfferedToUser(res));
     getClosedTradesOfferedById().then((res) =>
       setClosedTradesOfferedByUser(res)
     );
     getClosedTradesOfferedToId().then((res) =>
-      setClosedTradesOfferedToUser(res)
-    );
+      setClosedTrades(res)
+    ); */
   }, []);
+
+  const userItemDeterminer = (tradeOffer, whoseItem) => {
+    if (whoseItem === "currUser") {
+      if (currentUserId === tradeOffer.p1Item.userId) {
+        return tradeOffer.p1Item;
+      } else {
+        return tradeOffer.p2Item;
+      }
+    } else {
+      if (currentUserId != tradeOffer.p1Item.userId) {
+        return tradeOffer.p1Item;
+      } else {
+        return tradeOffer.p2Item;
+      }
+    }
+  };
+
+  const buttonDeterminer = (offer) => {
+    //Sdebugger;
+    if (currentUserId == offer.p1Item.userId) {
+      return <Link to={`/offers/rescind/${offer.id}`}>Rescind Offer</Link>;
+    } else {
+      return (
+        <div>
+          <Link to={`/offers/accept/${offer.id}`}>Accept</Link> |
+          <Link to={`/offers/decline/${offer.id}`}>Decline</Link>
+        </div>
+      );
+    }
+  };
 
   return (
     <>
       <h1>Open Trades</h1>
       <h2>you offered</h2>
-      {openTradesOfferedByUser.map((offer) => {
+      {openTrades.map((offer) => {
         return (
-          <div>
+          <div key={offer.id}>
             <a
-              href={`/item/details/${
-                items.find((item) => item.id === offer.party1ItemId).id
-              }`}
+              href={`/item/details/${userItemDeterminer(offer, "currUser").id}`}
             >
-              <p>{items.find((item) => item.id === offer.party1ItemId).name}</p>
-              <img
-                src={
-                  items.find((item) => item.id === offer.party1ItemId).imageUrl
-                }
-              ></img>
+              <p>{userItemDeterminer(offer, "currUser").name}</p>
+              <img src={userItemDeterminer(offer, "currUser").imageUrl}></img>
             </a>
-            <a
-              href={`/item/details/${
-                items.find((item) => item.id === offer.party2ItemId).id
-              }`}
-            >
-              <p>{items.find((item) => item.id === offer.party2ItemId).name}</p>
-              <img
-                src={
-                  items.find((item) => item.id === offer.party2ItemId).imageUrl
-                }
-              ></img>
+            <a href={`/item/details/${userItemDeterminer(offer).id}`}>
+              <p>{userItemDeterminer(offer).name}</p>
+              <img src={userItemDeterminer(offer).imageUrl}></img>
             </a>
-            <Link to={`/offers/rescind/${offer.id}`}>Rescind Offer</Link>
-          </div>
-        );
-      })}
-      <h2>Offered to you</h2>
-      {openTradesOfferedToUser.map((offer) => {
-        return (
-          <div>
-            <a
-              href={`/item/details/${
-                items.find((item) => item.id === offer.party1ItemId).id
-              }`}
-            >
-              <p>{items.find((item) => item.id === offer.party1ItemId).name}</p>
-              <img
-                src={
-                  items.find((item) => item.id === offer.party1ItemId).imageUrl
-                }
-              ></img>
-            </a>
-            <a
-              href={`/item/details/${
-                items.find((item) => item.id === offer.party2ItemId).id
-              }`}
-            >
-              <p>{items.find((item) => item.id === offer.party2ItemId).name}</p>
-              <img
-                src={
-                  items.find((item) => item.id === offer.party2ItemId).imageUrl
-                }
-              ></img>
-            </a>
-            <Link to={`/offers/accept/${offer.id}`}>Accept</Link> |
-            <Link to={`/offers/decline/${offer.id}`}>Decline</Link>
+            {buttonDeterminer(offer)}
           </div>
         );
       })}
       <h1>Closed Trades</h1>
-      <h2>you offered</h2>
-      {closedTradesOfferedByUser.map((offer) => {
+      {closedTrades.map((offer) => {
         return (
-          <div>
+          <div key={offer.id}>
             <a
-              href={`/item/details/${
-                items.find((item) => item.id === offer.party1ItemId).id
-              }`}
+              href={`/item/details/${userItemDeterminer(offer, "currUser").id}`}
             >
-              <p>{items.find((item) => item.id === offer.party1ItemId).name}</p>
-              <img
-                src={
-                  items.find((item) => item.id === offer.party1ItemId).imageUrl
-                }
-              ></img>
+              <p>{userItemDeterminer(offer, "currUser").name}</p>
+              <img src={userItemDeterminer(offer, "currUser").imageUrl}></img>
             </a>
-            <a
-              href={`/item/details/${
-                items.find((item) => item.id === offer.party2ItemId).id
-              }`}
-            >
-              <p>{items.find((item) => item.id === offer.party2ItemId).name}</p>
-              <img
-                src={
-                  items.find((item) => item.id === offer.party2ItemId).imageUrl
-                }
-              ></img>
-            </a>
-            <p>{`result: ${offer.status.name}`}</p>
-          </div>
-        );
-      })}
-      <h2>Offered to you</h2>
-      {closedTradesOfferedToUser.map((offer) => {
-        return (
-          <div>
-            <a
-              href={`/item/details/${
-                items.find((item) => item.id === offer.party1ItemId).id
-              }`}
-            >
-              <p>{items.find((item) => item.id === offer.party1ItemId).name}</p>
-              <img
-                src={
-                  items.find((item) => item.id === offer.party1ItemId).imageUrl
-                }
-              ></img>
-            </a>
-            <a
-              href={`/item/details/${
-                items.find((item) => item.id === offer.party2ItemId).id
-              }`}
-            >
-              <p>{items.find((item) => item.id === offer.party2ItemId).name}</p>
-              <img
-                src={
-                  items.find((item) => item.id === offer.party2ItemId).imageUrl
-                }
-              ></img>
+            <a href={`/item/details/${userItemDeterminer(offer).id}`}>
+              <p>{userItemDeterminer(offer).name}</p>
+              <img src={userItemDeterminer(offer).imageUrl}></img>
             </a>
             <p>{`result: ${offer.status.name}`}</p>
           </div>

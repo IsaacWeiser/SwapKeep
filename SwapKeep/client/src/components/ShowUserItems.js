@@ -14,7 +14,7 @@ export const CurrentUserItems = () => {
       <h1>your items</h1>
       <div>
         {userItems?.map((item) => (
-          <div>
+          <div key={item.id}>
             <img src={item?.imageUrl}></img>
             <h4>{item?.name}</h4>
             <button>

@@ -10,9 +10,9 @@
 
         public int StatusId { get; set; }
         
-        public Item p1Item { get; set; }
+        public Item P1Item { get; set; }
 
-        public Item p2Item { get; set; }
+        public Item P2Item { get; set; }
 
         public Status Status { get; set; }
     }
