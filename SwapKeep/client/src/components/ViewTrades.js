@@ -43,6 +43,20 @@ export const ViewTrades = () => {
     }
   };
 
+  const buttonDeterminer = (offer) => {
+    //Sdebugger;
+    if (currentUserId == offer.p1Item.userId) {
+      return <Link to={`/offers/rescind/${offer.id}`}>Rescind Offer</Link>;
+    } else {
+      return (
+        <div>
+          <Link to={`/offers/accept/${offer.id}`}>Accept</Link> |
+          <Link to={`/offers/decline/${offer.id}`}>Decline</Link>
+        </div>
+      );
+    }
+  };
+
   return (
     <>
       <h1>Open Trades</h1>
@@ -60,7 +74,7 @@ export const ViewTrades = () => {
               <p>{userItemDeterminer(offer).name}</p>
               <img src={userItemDeterminer(offer).imageUrl}></img>
             </a>
-            <Link to={`/offers/rescind/${offer.id}`}>Rescind Offer</Link>
+            {buttonDeterminer(offer)}
           </div>
         );
       })}
