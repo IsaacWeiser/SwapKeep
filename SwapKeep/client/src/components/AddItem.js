@@ -2,6 +2,7 @@ import { addItem } from "../modules/itemManager";
 import { useState, useEffect } from "react";
 import { getAllCategories } from "../modules/categoryManager";
 import { useHistory } from "react-router-dom";
+import "./style/addEdit.css";
 
 export const NewItemForm = () => {
   let history = useHistory();
@@ -122,31 +123,51 @@ export const NewItemForm = () => {
   return (
     <>
       <h1>Add Item</h1>
-      <p>Enter an item name</p>
-      <input id="newNameInp" onChange={trackName} />
-      <p>Enter an item imageUrl</p>
-      <input id="newImgUrlInp" onChange={trackImageUrl} />
-      <p>Enter an item category</p>
-      <select id="newCatIdInp" onChange={trackCategoryId}>
-        <option value="0">Please Select an Option</option>
-        {categories.map((cat) => {
-          return <option key={cat.id} value={i++}>{`${cat.name}`}</option>;
-        })}
-      </select>
-      <p>Enter an item description</p>
-      <input id="newDescriptionInp" onChange={trackDescription} />
-      <p>Enter an item condition</p>
-      <select id="newConditionInp" onChange={trackCondition}>
-        <option value="0">Please Select an Option</option>
-        <option value="1">broken/ non-functional</option>
-        <option value="2">acceptable</option>
-        <option value="3">good</option>
-        <option value="4">very good</option>
-        <option value="5">New</option>
-      </select>
-      <div>
-        <button onClick={submitItem}>submit</button>
-      </div>
+      <section className="ItemForm">
+        <p>Enter an item name</p>
+        <input id="newNameInp" onChange={trackName} />
+        <p>Enter an item imageUrl</p>
+        <input id="newImgUrlInp" onChange={trackImageUrl} />
+        <div className="selector">
+          <p>Enter an item category</p>
+          <select
+            id="newCatIdInp"
+            className="formSelect"
+            onChange={trackCategoryId}
+          >
+            <option value="0">Please Select an Option</option>
+            {categories.map((cat) => {
+              return <option key={cat.id} value={i++}>{`${cat.name}`}</option>;
+            })}
+          </select>
+        </div>
+        <p>Enter an item description</p>
+        <textarea
+          id="newDescriptionInp"
+          onChange={trackDescription}
+          name="paragraph_text"
+          cols="50"
+          rows="10"
+        ></textarea>
+        <div className="selector">
+          <p>Enter an item condition</p>
+          <select
+            id="newConditionInp"
+            className="formSelect"
+            onChange={trackCondition}
+          >
+            <option value="0">Please Select an Option</option>
+            <option value="1">broken/ non-functional</option>
+            <option value="2">acceptable</option>
+            <option value="3">good</option>
+            <option value="4">very good</option>
+            <option value="5">New</option>
+          </select>
+        </div>
+        <div>
+          <button onClick={submitItem}>submit</button>
+        </div>
+      </section>
     </>
   );
 };

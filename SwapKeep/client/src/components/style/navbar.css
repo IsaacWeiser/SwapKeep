@@ -1,0 +1,44 @@
+#nav-div
+{
+    background-color: rgb(185, 103, 255, 0.95);
+    display:flex;
+    justify-content: space-between;
+    position:sticky;
+    top:0;
+    width:100%;
+    height:80px;
+    margin: 0;
+    padding: 0;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+}
+
+#nav-div > * {
+    flex: 1 1 0;
+  }
+
+#nav-links{
+    display:flex;  
+    align-items: center;
+    flex-grow: 4;
+    justify-content: space-evenly;
+     
+}
+
+.linksNav {
+    color:white;
+}
+
+#logoWord{
+    color:aqua;
+    padding-left: 1em;
+}
+
+h1 {
+    text-align: center;
+}
+
+select
+{
+    display:block;
+    margin: 0 auto;
+}

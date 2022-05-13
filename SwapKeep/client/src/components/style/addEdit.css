@@ -1,0 +1,33 @@
+.ItemForm
+{
+    display: flex;
+    flex-direction: column;
+    margin:50px;
+    padding:25px;
+    background-color:rgba(1,205,254, 0.4);
+    box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
+}
+
+.selector
+{
+    display: flex;
+    gap:30px;
+    align-items: center;
+}
+
+.formSelect
+{
+    margin:0;
+}
+
+#ItemForm > div > button
+{
+ width:100%;
+ background-color:rgb(5,255,161);
+}
+
+#root > main > section > div > button
+{
+    width:100%;
+ background-color:rgb(5,255,161); 
+}

@@ -3,6 +3,7 @@ import { getOpenTrades } from "../modules/TradeManager";
 import { getClosedTrades } from "../modules/TradeManager";
 import { getCurrentUserId } from "../modules/userProfileManager";
 import { Link } from "react-router-dom";
+import "./style/offers.css";
 
 export const ViewTrades = () => {
   const [openTrades, setOpenTrades] = useState([]);
@@ -57,45 +58,76 @@ export const ViewTrades = () => {
     }
   };
 
+  const openStatusDeterminer = (offer) => {
+    //Sdebugger;
+    if (currentUserId == offer.p1Item.userId) {
+      return "youOffered";
+    } else {
+      return "offeredToYou";
+    }
+  };
+
   return (
     <>
       <h1>Open Trades</h1>
-      <h2>you offered</h2>
-      {openTrades.map((offer) => {
-        return (
-          <div key={offer.id}>
-            <a
-              href={`/item/details/${userItemDeterminer(offer, "currUser").id}`}
+      <section className="trade-list" id="open-trades-list">
+        {openTrades.map((offer) => {
+          return (
+            <div
+              className={`${openStatusDeterminer(offer)} trade-card`}
+              key={offer.id}
             >
-              <p>{userItemDeterminer(offer, "currUser").name}</p>
-              <img src={userItemDeterminer(offer, "currUser").imageUrl}></img>
-            </a>
-            <a href={`/item/details/${userItemDeterminer(offer).id}`}>
-              <p>{userItemDeterminer(offer).name}</p>
-              <img src={userItemDeterminer(offer).imageUrl}></img>
-            </a>
-            {buttonDeterminer(offer)}
-          </div>
-        );
-      })}
-      <h1>Closed Trades</h1>
-      {closedTrades.map((offer) => {
-        return (
-          <div key={offer.id}>
-            <a
-              href={`/item/details/${userItemDeterminer(offer, "currUser").id}`}
-            >
-              <p>{userItemDeterminer(offer, "currUser").name}</p>
-              <img src={userItemDeterminer(offer, "currUser").imageUrl}></img>
-            </a>
-            <a href={`/item/details/${userItemDeterminer(offer).id}`}>
-              <p>{userItemDeterminer(offer).name}</p>
-              <img src={userItemDeterminer(offer).imageUrl}></img>
-            </a>
-            <p>{`result: ${offer.status.name}`}</p>
-          </div>
-        );
-      })}
+              <div className="currUser-item item">
+                <a
+                  href={`/item/details/${
+                    userItemDeterminer(offer, "currUser").id
+                  }`}
+                >
+                  <p>{userItemDeterminer(offer, "currUser").name}</p>
+                  <img
+                    src={userItemDeterminer(offer, "currUser").imageUrl}
+                  ></img>
+                </a>
+              </div>
+              <div className="2ndParty-item item">
+                <a href={`/item/details/${userItemDeterminer(offer).id}`}>
+                  <p>{userItemDeterminer(offer).name}</p>
+                  <img src={userItemDeterminer(offer).imageUrl}></img>
+                </a>
+              </div>
+              {buttonDeterminer(offer)}
+            </div>
+          );
+        })}
+      </section>
+      <section className="trade-list" id="closed-trades-list">
+        <h1>Closed Trades</h1>
+        {closedTrades.map((offer) => {
+          return (
+            <div className={`${offer.status.name} trade-card`} key={offer.id}>
+              <div className="currUser-item item">
+                <a
+                  href={`/item/details/${
+                    userItemDeterminer(offer, "currUser").id
+                  }`}
+                >
+                  <p>{userItemDeterminer(offer, "currUser").name}</p>
+                  <img
+                    src={userItemDeterminer(offer, "currUser").imageUrl}
+                  ></img>
+                </a>
+              </div>
+              <div className="2ndParty-item item">
+                <a href={`/item/details/${userItemDeterminer(offer).id}`}>
+                  <p>{userItemDeterminer(offer).name}</p>
+                  <img src={userItemDeterminer(offer).imageUrl}></img>
+                </a>
+              </div>
+              <p>{`result: ${offer.status.name}`}</p>
+            </div>
+          );
+        })}
+      </section>
     </>
   );
 };

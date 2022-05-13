@@ -4,6 +4,7 @@ import { getAllItemsOfUser } from "../modules/itemManager";
 import { useParams } from "react-router-dom";
 import { Link, useHistory } from "react-router-dom";
 import { addTrade } from "../modules/TradeManager";
+import "./style/createOffer.css";
 
 export const MakeOffer = () => {
   const { id } = useParams();
@@ -58,22 +59,32 @@ export const MakeOffer = () => {
   return (
     <>
       <h1>Make Offer</h1>
-      <h3>Item Wanted</h3>
-      <h4>{itemWanted.name}</h4>
-      <img src={itemWanted.imageUrl}></img>
-      <h3>Item you want to offer</h3>
-      <select onChange={trackParty1}>
-        <option value="0">Select which item you want to offer in return</option>
-        {itemsToOffer.map((item) => {
-          return (
-            <option key={item.id} value={item.id}>
-              {item.name}
+      <section id="makeOffer-card">
+        <div>
+          <h3 className="cardLabel">Item Wanted</h3>
+          <h4 className="cardLabel">{itemWanted.name}</h4>
+          <img src={itemWanted.imageUrl}></img>
+        </div>
+        <div>
+          <h3 className="cardLabel">Item you want to offer</h3>
+          <select onChange={trackParty1}>
+            <option value="0">
+              Select which item you want to offer in return
             </option>
-          );
-        })}
-      </select>
-      <button onClick={submitOffer}>Submit</button>
-      <Link to={`/item/details/${id}`}>Back</Link>
+            {itemsToOffer.map((item) => {
+              return (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              );
+            })}
+          </select>
+        </div>
+        <div>
+          <button onClick={submitOffer}>Submit</button>
+          <Link to={`/item/details/${id}`}>Back</Link>
+        </div>
+      </section>
     </>
   );
 };
