@@ -26,4 +26,14 @@ This form allows you to create an item that will be added to your inventory
 ### Item Details
 <img width="1279" alt="swapKeep-itemDetails" src="https://user-images.githubusercontent.com/46665724/168639426-6dbdc602-17b2-4947-978d-ae4a67723971.png">
 
-### 
+### Item Deactivation
+<img width="1280" alt="swapKeep-deactivateItem" src="https://user-images.githubusercontent.com/46665724/168640049-446391f4-28f0-4ffe-af49-edb87b6d4285.png">
+
+### Item Edit
+<img width="1280" alt="swapKeep-editItem" src="https://user-images.githubusercontent.com/46665724/168640138-b7d83957-aea7-41c2-a62d-0e1d13a6cc25.png">
+
+### Open offers
+<img width="1280" alt="swapKeep-OpenOffers" src="https://user-images.githubusercontent.com/46665724/168640260-2336f7de-d9a2-4cdb-8a48-38d645024879.png">
+
+### Closed Trades
+<img width="1280" alt="swapKeep-ClosedTrades" src="https://user-images.githubusercontent.com/46665724/168640306-03c775ac-8675-4004-96dc-7c2a3546d5dc.png">
