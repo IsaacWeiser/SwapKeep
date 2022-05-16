@@ -3,8 +3,8 @@ SwapKeep is an application that allows users to barter their things for items th
 
 ## Getting Started
 Instructions
-  •Clone the repo to your local machine
-  •Use the queries found in the SQL directory to create and seed your data.
-  •Run the Wep API.
-  •Install front-end dependencies with npm install in the Client directory.
-  •Host the project using npm start in the Client directory.
+- Clone the repo to your local machine
+- Use the queries found in the SQL directory to create and seed your data.
+- Run the Wep API.
+- Install front-end dependencies with npm install in the Client directory.
+- Host the project using npm start in the Client directory.
