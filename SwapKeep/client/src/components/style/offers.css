@@ -1,0 +1,43 @@
+.trade-card
+{
+    background-color:rgba(1,205,254, 0.4);
+    box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;
+    margin:45px;
+    display: flex;
+    gap:5%;
+    flex-wrap: wrap;
+    justify-content: space-evenly;
+    align-items: flex-start;
+}
+
+section > div > div > a > img
+{
+    width:auto;
+    max-height:100%
+}
+
+.offeredToYou
+{  
+}
+
+.youOffered
+{
+ background-color: rgba(185,103,255,0.4);
+}
+
+.Accepted
+{
+ background-color: rgba(5,255,161,0.4);
+}
+
+.Declined
+{
+background-color: rgba(212,0,120,0.4);
+}
+
+.Rescinded
+{
+ background-color: rgba(255,251,150,0.4);
+}
+
+

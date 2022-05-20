@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import { getAllCategories } from "../modules/categoryManager";
 import { updateItem } from "../modules/itemManager";
 import { useHistory } from "react-router-dom";
+import "./style/addEdit.css";
 
 export const ItemEdit = () => {
   const history = useHistory();
@@ -93,36 +94,53 @@ export const ItemEdit = () => {
   return (
     <>
       <h1>Edit Item</h1>
-      <h4>name:</h4>
-      <input value={`${item?.name}`} onChange={trackName}></input>
-      <h4>Image url</h4>
-      <input value={`${item?.imageUrl}`} onChange={trackImgUrl}></input>
-      <h4>Description: </h4>
-      <input value={`${item?.description}`} onChange={trackDescription}></input>
-      <h4>condition: </h4>
-      <select id="conditionSelect" onChange={trackCondition}>
-        <option value="1">Broken</option>
-        <option value="2">acceptable</option>
-        <option value="3">good</option>
-        <option value="4">Very good</option>
-        <option value="5">New</option>
-      </select>
-      <h4>Category: </h4>
-      <select id="categorySelect" onChange={trackCategory}>
-        {categories?.map((cat) => (
-          <option key={cat.id} value={cat.id}>{`${cat.name}`}</option>
-        ))}
-      </select>
-      <h4>Available: </h4>
-      <input
-        id="availableChx"
-        type="checkbox"
-        onChange={trackAvailable}
-      ></input>
-      <div>
-        <button onClick={submitState}>submit</button>
-      </div>
-      <Link to={`/item/details/${item.id}`}>Back</Link>
+      <section className="ItemForm">
+        <h4>name:</h4>
+        <input value={`${item?.name}`} onChange={trackName}></input>
+        <h4>Image url</h4>
+        <input value={`${item?.imageUrl}`} onChange={trackImgUrl}></input>
+        <h4>Description: </h4>
+        <input
+          value={`${item?.description}`}
+          onChange={trackDescription}
+        ></input>
+        <div className="selector">
+          <h4>condition: </h4>
+          <select
+            className="formSelect"
+            id="conditionSelect"
+            onChange={trackCondition}
+          >
+            <option value="1">Broken</option>
+            <option value="2">acceptable</option>
+            <option value="3">good</option>
+            <option value="4">Very good</option>
+            <option value="5">New</option>
+          </select>
+        </div>
+        <div className="selector">
+          <h4>Category: </h4>
+          <select
+            className="formSelect"
+            id="categorySelect"
+            onChange={trackCategory}
+          >
+            {categories?.map((cat) => (
+              <option key={cat.id} value={cat.id}>{`${cat.name}`}</option>
+            ))}
+          </select>
+        </div>
+        <h4>Available: </h4>
+        <input
+          id="availableChx"
+          type="checkbox"
+          onChange={trackAvailable}
+        ></input>
+        <div>
+          <button onClick={submitState}>submit</button>
+        </div>
+        <Link to={`/item/details/${item.id}`}>Back</Link>
+      </section>
     </>
   );
 };

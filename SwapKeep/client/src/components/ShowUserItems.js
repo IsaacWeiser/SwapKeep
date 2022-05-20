@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getAllItemsOfUser } from "../modules/itemManager";
 import { Link } from "react-router-dom";
+import { userItems } from "./style/UserItems.css";
 
 export const CurrentUserItems = () => {
   const [userItems, updateUserItems] = useState();
@@ -12,24 +13,26 @@ export const CurrentUserItems = () => {
   return (
     <>
       <h1>your items</h1>
-      <div>
+      <section id="inventory">
         {userItems?.map((item) => (
-          <div key={item.id}>
-            <img src={item?.imageUrl}></img>
+          <div className="item-card" key={item.id}>
             <h4>{item?.name}</h4>
-            <button>
-              <Link to={`/item/details/${item.id}`}>View</Link>
-            </button>
-            {item.available == true ? (
+            <img src={item?.imageUrl}></img>
+            <div className="button-section">
               <button>
-                <Link to={`/item/deactivate/${item.id}`}>Deactivate</Link>
+                <Link to={`/item/details/${item.id}`}>View</Link>
               </button>
-            ) : (
-              ""
-            )}
+              {item.available == true ? (
+                <button>
+                  <Link to={`/item/deactivate/${item.id}`}>Deactivate</Link>
+                </button>
+              ) : (
+                ""
+              )}
+            </div>
           </div>
         ))}
-      </div>
+      </section>
     </>
   );
 };
